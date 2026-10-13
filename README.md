@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### note: while moving from dashboard to expanded client page you need to wait for 2 to 3 min as we are using free tier of llm 
 
-## Getting Started
+## deployed link (on render) : https://matchmaking-s522.onrender.com
 
-First, run the development server:
+### dummy details (assumption : the employee is already assigned his name and pass so that he can easily enter to the dashboard to see his assigned clients)
+- email : matchmaker@company.com
+- password : secret123
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## things accomplished :
+- login page with dummy details to enter:
+- created dashboard to see all the assigned clients
+- created json and stored on the backend (100 of the created with every property mentioned but for the sake of free tier of llm passing only some of the them to save the tokens)
+- created details View page with 3 top matches done by ai llm
+- once clicked send match you get a mini pop on top of that 
+### while moving from dashboard to expanded client page you need to wait for 2 to 3 min as we are using free tier of llm 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### tech used
+- Next.js (so that we dont need to create seperate frontend and backend)
+- tried groq, gemini and lastly used OpenRouter integration for hitting the llm
+- tailwind
+- node.js
+- lucide-react for small icons
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+  ## Matching login is purely based on system prompt (will paste the system prompt below)
+  - You are an expert matchmaking CRM assistant. Analyze the target customer against the candidate pool and provide concise compatibility insights the matching should be done only with opposite gender. Give me the top 3 matches with a couple of points on why they match, along with basic details like first_name, last_name, dob, designation, gender and height_cm .Return ONLY a JSON object with this exact key structure: { "matches": [  { "id": number"first_name": "string","last_name": "string","match_score": number (e.g. 92),"designation": "string", "age": number,"height_cm": number,"reasons": ["Point 1", "Point 2", "Point 3"]   }
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  ## How ai is used
+  - as recommended used ai for matching the details by hitting the llm and passing the json data to it 
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
