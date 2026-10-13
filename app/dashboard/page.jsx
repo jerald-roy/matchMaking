@@ -1,157 +1,159 @@
 'use client'
 
-import{ useState } from 'react';
+import{ useState , useEffect} from 'react';
 import { HeartHandshake } from 'lucide-react'; 
 import { Menu } from 'lucide-react';
-import { Users} from 'lucide-react';
+import { Users } from 'lucide-react';
+import Link from 'next/link';
 
 // Sample dummy customer data aligned with assignment requirements
-const INITIAL_CUSTOMERS = [
-  {
-    id: 'c1',
-    name: 'Andrew Peterson',
-    gender:'male',
-    age: 29,
-    country:"india",
-    city: 'Bengaluru',
-    maritalStatus: 'Never Married',
-    status: 'In Progress',
-    email: 'andrew.p@example.com',
-    phone: '+91 98765 43210',
-    height: "160cm",
-    education: '',
-    income: '',
-    currentCompany: '',
-    designation: '',
-    languageKnown: '',
-    siblings: '',
-    caste: '',
-    religin: '',
-    want_kids: '',
-    open_to_relocate: '',
-    open_to_pets:''
-  },
-  /*
-  • First Name, Last Name
-• Gender
-• Date of Birth
-• Country, City
-• Height
-• Email, Phone Number
-• Undergraduate College, Degree
-• Income
-• Current Company, Designation
-• Marital Status
-• Languages Known
-• Siblings
+// const INITIAL_CUSTOMERS = [
+//   {
+//     id: 'c1',
+//     name: 'Andrew Peterson',
+//     gender:'male',
+//     age: 29,
+//     country:"india",
+//     city: 'Bengaluru',
+//     maritalStatus: 'Never Married',
+//     status: 'In Progress',
+//     email: 'andrew.p@example.com',
+//     phone: '+91 98765 43210',
+//     height: "160cm",
+//     education: '',
+//     income: '',
+//     currentCompany: '',
+//     designation: '',
+//     languageKnown: '',
+//     siblings: '',
+//     caste: '',
+//     religin: '',
+//     want_kids: '',
+//     open_to_relocate: '',
+//     open_to_pets:''
+//   },
+//   /*
+//   • First Name, Last Name
+// • Gender
+// • Date of Birth
+// • Country, City
+// • Height
+// • Email, Phone Number
+// • Undergraduate College, Degree
+// • Income
+// • Current Company, Designation
+// • Marital Status
+// • Languages Known
+// • Siblings
 
-• Caste, Religion
-• Want Kids (Yes/No/Maybe)
-• Open to Relocate (Yes/No/Maybe)
-• Open to Pets (Yes/No/Maybe)
+// • Caste, Religion
+// • Want Kids (Yes/No/Maybe)
+// • Open to Relocate (Yes/No/Maybe)
+// • Open to Pets (Yes/No/Maybe)
   
   
-  */
-  {
-    id: 'c2',
-    name: 'Brooklyn Simmons',
-    age: 27,
-    city: 'Mumbai',
-    maritalStatus: 'Never Married',
-    status: 'Matched',
-    email: 'brooklyn.s@example.com',
-    phone: '+91 98123 45678',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c3',
-    name: 'Leslie Alexander',
-    age: 31,
-    city: 'Delhi',
-    maritalStatus: 'Divorced',
-    status: 'In Progress',
-    email: 'leslie.a@example.com',
-    phone: '+91 99887 76655',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c4',
-    name: 'Jacob Jones',
-    age: 28,
-    city: 'Pune',
-    maritalStatus: 'Never Married',
-    status: 'Matched',
-    email: 'jacob.j@example.com',
-    phone: '+91 97654 32109',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c5',
-    name: 'Dianne Russell',
-    age: 26,
-    city: 'Hyderabad',
-    maritalStatus: 'Never Married',
-    status: 'In Progress',
-    email: 'dianne.r@example.com',
-    phone: '+91 91234 56789',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c6',
-    name: 'Marvin McKinney',
-    age: 32,
-    city: 'Bengaluru',
-    maritalStatus: 'Widowed',
-    status: 'On Hold',
-    email: 'marvin.m@example.com',
-    phone: '+91 94567 89012',
-    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c7',
-    name: 'Kathryn Murphy',
-    age: 30,
-    city: 'Chennai',
-    maritalStatus: 'Never Married',
-    status: 'Matched',
-    email: 'kathryn.m@example.com',
-    phone: '+91 93210 98765',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'c8',
-    name: 'Arlene McCoy',
-    age: 29,
-    city: 'Kolkata',
-    maritalStatus: 'Never Married',
-    status: 'In Progress',
-    email: 'arlene.m@example.com',
-    phone: '+91 92345 67890',
-    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
-  },
-];
+//   */
+//   {
+//     id: 'c2',
+//     name: 'Brooklyn Simmons',
+//     age: 27,
+//     city: 'Mumbai',
+//     maritalStatus: 'Never Married',
+//     status: 'Matched',
+//     email: 'brooklyn.s@example.com',
+//     phone: '+91 98123 45678',
+//     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c3',
+//     name: 'Leslie Alexander',
+//     age: 31,
+//     city: 'Delhi',
+//     maritalStatus: 'Divorced',
+//     status: 'In Progress',
+//     email: 'leslie.a@example.com',
+//     phone: '+91 99887 76655',
+//     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c4',
+//     name: 'Jacob Jones',
+//     age: 28,
+//     city: 'Pune',
+//     maritalStatus: 'Never Married',
+//     status: 'Matched',
+//     email: 'jacob.j@example.com',
+//     phone: '+91 97654 32109',
+//     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c5',
+//     name: 'Dianne Russell',
+//     age: 26,
+//     city: 'Hyderabad',
+//     maritalStatus: 'Never Married',
+//     status: 'In Progress',
+//     email: 'dianne.r@example.com',
+//     phone: '+91 91234 56789',
+//     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c6',
+//     name: 'Marvin McKinney',
+//     age: 32,
+//     city: 'Bengaluru',
+//     maritalStatus: 'Widowed',
+//     status: 'On Hold',
+//     email: 'marvin.m@example.com',
+//     phone: '+91 94567 89012',
+//     avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c7',
+//     name: 'Kathryn Murphy',
+//     age: 30,
+//     city: 'Chennai',
+//     maritalStatus: 'Never Married',
+//     status: 'Matched',
+//     email: 'kathryn.m@example.com',
+//     phone: '+91 93210 98765',
+//     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+//   },
+//   {
+//     id: 'c8',
+//     name: 'Arlene McCoy',
+//     age: 29,
+//     city: 'Kolkata',
+//     maritalStatus: 'Never Married',
+//     status: 'In Progress',
+//     email: 'arlene.m@example.com',
+//     phone: '+91 92345 67890',
+//     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
+//   },
+// ];
 
-export default function MatchmakerDashboard({ onSelectCustomer }) {
+export default function MatchmakerDashboard() {
   const [activeTab, setActiveTab] = useState('ALL'); // 'ALL', 'IN_PROGRESS', 'MATCHED'
   const [searchQuery, setSearchQuery] = useState('');
+  const [profileData ,  setProfileData] = useState([])
 
   // Matchmaker profile details (Left Sidebar)
   const employee = {
     name: 'Jerald Roy J',
     id: 'EMP-4082',
     role: 'Junior Matchmaker',
-    totalClients: INITIAL_CUSTOMERS.length,
+    totalClients: profileData.length,
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
   };
 
   // Filter customers based on search and active tab
-  const filteredCustomers = INITIAL_CUSTOMERS.filter((customer) => {
+  const filteredCustomers = profileData.filter((customer) => {
     const matchesSearch =
-      customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      customer.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       customer.city.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (activeTab === 'IN_PROGRESS') {
-      return matchesSearch && customer.status === 'In Progress';
+      return matchesSearch && customer.status === 'In_Progress';
     }
     if (activeTab === 'MATCHED') {
       return matchesSearch && customer.status === 'Matched';
@@ -160,8 +162,8 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
   });
 
   // Calculate quick stats
-  const countInProgress = INITIAL_CUSTOMERS.filter((c) => c.status === 'In Progress').length;
-  const countMatched = INITIAL_CUSTOMERS.filter((c) => c.status === 'Matched').length;
+  const countInProgress = profileData.filter((c) => c.status === 'In_Progress').length;
+  const countMatched = profileData.filter((c) => c.status === 'Matched').length;
 
   // Helper function to pick status badge colors
   const getStatusBadge = (status) => {
@@ -176,6 +178,18 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
         return 'bg-blue-50 text-blue-600 border-blue-200';
     }
   };
+
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch('api/profiles')
+      const result = await response.json();
+      console.log(result)
+      if (result.sucess) {
+        setProfileData(result.data)
+      }
+    }
+    getData()
+  },[])
 
   return (
     
@@ -283,7 +297,7 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
                     : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                All Clients ({INITIAL_CUSTOMERS.length})
+                All Clients ({profileData.length})
               </button>
 
               <button
@@ -323,10 +337,11 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filteredCustomers.map((customer) => (
+                  {filteredCustomers.map((customer) => (
+                <Link key={customer.id} href={`/dashboard/${customer.id}`}>
                 <div
                   key={customer.id}
-                  onClick={() => onSelectCustomer && onSelectCustomer(customer.id)}
+                  // onClick={}
                   className="group bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-200 cursor-pointer flex flex-col justify-between h-auto sm:aspect-square"
                 >
                   {/* Top Header of Card */}
@@ -335,7 +350,7 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
                       <div className="flex items-center gap-3">
                         {/* Replace the <img> tag with this circular initials placeholder */}
 <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 font-bold text-sm flex items-center justify-center border border-blue-100 shadow-sm shrink-0">
-  {customer.name
+  {customer.first_name
     .split(' ')
     .map((n) => n[0])
     .join('')
@@ -343,9 +358,9 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
 </div>
                         <div>
                           <h3 className="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition-colors line-clamp-1">
-                            {customer.name}
+                            {customer.first_name}
                           </h3>
-                          <p className="text-xs text-slate-400 font-medium">{customer.age} yrs • {customer.city}</p>
+                          <p className="text-xs text-slate-400 font-medium">{customer.date_of_birth} yrs • {customer.city}</p>
                         </div>
                       </div>
 
@@ -369,12 +384,12 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
                         <svg className="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
-                        <span>{customer.phone}</span>
+                        <span>{customer.phone_number}</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Bottom Status Tags & Marital Status */}
+                  {/* Bottom Status Tags  */}
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 mx-auto">
                   
                     
@@ -386,7 +401,7 @@ export default function MatchmakerDashboard({ onSelectCustomer }) {
                       {customer.status}
                     </span>
                   </div>
-                </div>
+                </div></Link>
               ))}
             </div>
           )}
