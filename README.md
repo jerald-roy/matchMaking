@@ -1,4 +1,4 @@
-### note: while moving from dashboard to expanded client page you need to wait for 2 to 3 min as we are using free tier of llm 
+### note: while moving from dashboard to expanded client page you need to wait for 4 to 5 min as we are using free tier of llm 
 
 ## deployed link (on render) : https://matchmaking-s522.onrender.com
 
@@ -12,7 +12,7 @@
 - created json and stored on the backend (100 of the created with every property mentioned but for the sake of free tier of llm passing only some of the them to save the tokens)
 - created details View page with 3 top matches done by ai llm
 - once clicked send match you get a mini pop on top of that 
-### while moving from dashboard to expanded client page you need to wait for 2 to 3 min as we are using free tier of llm 
+### while moving from dashboard to expanded client page you need to wait for 4 to 5 min as we are using free tier of llm 
 
 ### tech used
 - Next.js (so that we dont need to create seperate frontend and backend)
